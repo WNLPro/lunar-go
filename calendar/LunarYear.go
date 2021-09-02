@@ -97,6 +97,16 @@ func (lunarYear *LunarYear) GetMonths() *list.List {
 	return lunarYear.months
 }
 
+func (lunarYear *LunarYear) GetMonthsInString() string {
+	comps := ""
+
+	for i := lunarYear.months.Front(); i != nil; i = i.Next() {
+		m := i.Value.(*LunarMonth)
+		comps += strconv.Itoa(m.GetMonth())+ "," + strconv.Itoa(m.GetDayCount()) + ";"
+	}
+	return comps
+}
+
 func (lunarYear *LunarYear) GetJieQiJulianDays() []float64 {
 	return lunarYear.jieQiJulianDays
 }
@@ -105,6 +115,9 @@ func (lunarYear *LunarYear) GetMonth(lunarMonth int) *LunarMonth {
 	for i := lunarYear.months.Front(); i != nil; i = i.Next() {
 		m := i.Value.(*LunarMonth)
 		if m.GetYear() == lunarYear.year && m.GetMonth() == lunarMonth {
+			return m
+		}
+		if lunarMonth == -11 {
 			return m
 		}
 	}

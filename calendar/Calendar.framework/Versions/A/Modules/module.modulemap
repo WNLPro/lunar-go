@@ -1,0 +1,8 @@
+framework module "Calendar" {
+	header "ref.h"
+    header "Calendar.objc.h"
+    header "Universe.objc.h"
+    header "Calendar.h"
+
+    export *
+}

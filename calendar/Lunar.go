@@ -55,7 +55,7 @@ func NewLunar(lunarYear int, lunarMonth int, lunarDay int, hour int, minute int,
 	}
 	days := m.GetDayCount()
 	if lunarDay > days {
-		panic("only " + strconv.Itoa(days) + " days in lunar year " + strconv.Itoa(lunarYear) + " month " + strconv.Itoa(lunarMonth))
+		// panic("only " + strconv.Itoa(days) + " days in lunar year " + strconv.Itoa(lunarYear) + " month " + strconv.Itoa(lunarMonth))
 	}
 
 	lunar := new(Lunar)
@@ -81,6 +81,28 @@ func NewLunarFromDate(date time.Time) *Lunar {
 	lunarDay := 0
 	solar := NewSolarFromDate(date)
 	c := time.Date(solar.year, time.Month(solar.month), solar.day, 0, 0, 0, 0, time.Local)
+	ly := NewLunarYear(solar.year)
+	for i := ly.months.Front(); i != nil; i = i.Next() {
+		m := i.Value.(*LunarMonth)
+		day := NewSolarFromJulianDay(m.GetFirstJulianDay())
+		firstDay := NewSolar(day.year, day.month, day.day, 0, 0, 0)
+		days := int(c.Sub(firstDay.calendar).Hours() / 24)
+		if days < m.GetDayCount() {
+			lunarYear = m.GetYear()
+			lunarMonth = m.GetMonth()
+			lunarDay = days + 1
+			break
+		}
+	}
+	return NewLunar(lunarYear, lunarMonth, lunarDay, solar.hour, solar.minute, solar.second)
+}
+
+func NewLunarFromSolarYmd(year int, month int, day int, hour int, minute int, second int) *Lunar {
+	lunarYear := 0
+	lunarMonth := 0
+	lunarDay := 0
+	solar := NewSolar(year, month, day, hour, minute, second)
+	c := time.Date(solar.year, time.Month(solar.month), solar.day, hour, minute, second, 0, time.Local)
 	ly := NewLunarYear(solar.year)
 	for i := ly.months.Front(); i != nil; i = i.Next() {
 		m := i.Value.(*LunarMonth)
@@ -976,24 +998,72 @@ func (lunar *Lunar) GetDayYi() *list.List {
 	return LunarUtil.GetDayYi(lunar.GetMonthInGanZhiExact(), lunar.GetDayInGanZhi())
 }
 
+func (lunar *Lunar) GetDayYiStrings() string {
+	name := ""
+	for i := lunar.GetDayYi().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (lunar *Lunar) GetDayJi() *list.List {
 	return LunarUtil.GetDayJi(lunar.GetMonthInGanZhiExact(), lunar.GetDayInGanZhi())
+}
+
+func (lunar *Lunar) GetDayJiStrings() string {
+	name := ""
+	for i := lunar.GetDayJi().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
 }
 
 func (lunar *Lunar) GetDayJiShen() *list.List {
 	return LunarUtil.GetDayJiShen(lunar.GetMonth(), lunar.GetDayInGanZhi())
 }
 
+func (lunar *Lunar) GetDayJiShenStrings() string {
+	name := ""
+	for i := lunar.GetDayJiShen().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (lunar *Lunar) GetDayXiongSha() *list.List {
 	return LunarUtil.GetDayXiongSha(lunar.GetMonth(), lunar.GetDayInGanZhi())
+}
+
+func (lunar *Lunar) GetDayXiongShaStrings() string {
+	name := ""
+	for i := lunar.GetDayXiongSha().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
 }
 
 func (lunar *Lunar) GetTimeYi() *list.List {
 	return LunarUtil.GetTimeYi(lunar.GetDayInGanZhiExact(), lunar.GetTimeInGanZhi())
 }
 
+func (lunar *Lunar) GetTimeYiStrings() string {
+	name := ""
+	for i := lunar.GetTimeYi().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (lunar *Lunar) GetTimeJi() *list.List {
 	return LunarUtil.GetTimeJi(lunar.GetDayInGanZhiExact(), lunar.GetTimeInGanZhi())
+}
+
+func (lunar *Lunar) GetTimeJiStrings() string {
+	name := ""
+	for i := lunar.GetTimeJi().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
 }
 
 func (lunar *Lunar) GetYueXiang() string {
