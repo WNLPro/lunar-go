@@ -20,6 +20,7 @@
 @class CalendarLiuYue;
 @class CalendarLunar;
 @class CalendarLunarMonth;
+@class CalendarLunarTime;
 @class CalendarLunarYear;
 @class CalendarNineStar;
 @class CalendarShuJiu;
@@ -47,10 +48,14 @@
 - (long)getIndex;
 // skipped method DaYun.GetLiuNian with unsupported parameter or return types
 
+// skipped method DaYun.GetLiuNianBy with unsupported parameter or return types
+
 - (CalendarLunar* _Nullable)getLunar;
 - (long)getStartAge;
 - (long)getStartYear;
 // skipped method DaYun.GetXiaoYun with unsupported parameter or return types
+
+// skipped method DaYun.GetXiaoYunBy with unsupported parameter or return types
 
 /**
  * 获取所在旬
@@ -165,6 +170,9 @@
 - (NSString* _Nonnull)string;
 @end
 
+/**
+ * 伏
+ */
 @interface CalendarFu : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -200,6 +208,9 @@
 - (NSString* _Nonnull)string;
 @end
 
+/**
+ * 节气
+ */
 @interface CalendarJieQi : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -233,6 +244,9 @@
 - (NSString* _Nonnull)string;
 @end
 
+/**
+ * 流年
+ */
 @interface CalendarLiuNian : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -258,6 +272,9 @@
 - (long)getYear;
 @end
 
+/**
+ * 流月
+ */
 @interface CalendarLiuYue : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -291,6 +308,9 @@
 - (NSString* _Nonnull)getXunKong;
 @end
 
+/**
+ * 阴历
+ */
 @interface CalendarLunar : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -374,6 +394,10 @@
 
 - (NSString* _Nonnull)getDayJiShenStrings;
 - (NSString* _Nonnull)getDayJiStrings;
+/**
+ * 获取日禄
+ */
+- (NSString* _Nonnull)getDayLu;
 - (NSString* _Nonnull)getDayNaYin;
 - (CalendarNineStar* _Nullable)getDayNineStar;
 - (NSString* _Nonnull)getDayPositionCai;
@@ -572,6 +596,10 @@
  */
 - (CalendarShuJiu* _Nullable)getShuJiu;
 - (CalendarSolar* _Nullable)getSolar;
+/**
+ * 获取时辰
+ */
+- (CalendarLunarTime* _Nullable)getTime;
 - (NSString* _Nonnull)getTimeChong;
 - (NSString* _Nonnull)getTimeChongDesc;
 - (NSString* _Nonnull)getTimeChongGan;
@@ -613,6 +641,8 @@
 - (NSString* _Nonnull)getTimeYiStrings;
 - (NSString* _Nonnull)getTimeZhi;
 - (long)getTimeZhiIndex;
+// skipped method Lunar.GetTimes with unsupported parameter or return types
+
 - (long)getWeek;
 - (NSString* _Nonnull)getWeekInChinese;
 /**
@@ -683,6 +713,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 阴历月
+ */
 @interface CalendarLunarMonth : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -698,12 +731,78 @@
 - (NSString* _Nonnull)string;
 @end
 
+/**
+ * 时辰
+ */
+@interface CalendarLunarTime : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nullable instancetype)init:(long)lunarYear lunarMonth:(long)lunarMonth lunarDay:(long)lunarDay hour:(long)hour minute:(long)minute second:(long)second;
+- (NSString* _Nonnull)getChong;
+- (NSString* _Nonnull)getChongDesc;
+- (NSString* _Nonnull)getChongGan;
+- (NSString* _Nonnull)getChongGanTie;
+- (NSString* _Nonnull)getChongShengXiao;
+- (NSString* _Nonnull)getGan;
+- (long)getGanIndex;
+- (NSString* _Nonnull)getGanZhi;
+// skipped method LunarTime.GetJi with unsupported parameter or return types
+
+/**
+ * 获取当前时辰的最晚时分
+ */
+- (NSString* _Nonnull)getMaxHm;
+/**
+ * 获取当前时辰的最早时分
+ */
+- (NSString* _Nonnull)getMinHm;
+- (NSString* _Nonnull)getNaYin;
+- (CalendarNineStar* _Nullable)getNineStar;
+- (NSString* _Nonnull)getPositionCai;
+- (NSString* _Nonnull)getPositionCaiDesc;
+- (NSString* _Nonnull)getPositionFu;
+- (NSString* _Nonnull)getPositionFuDesc;
+- (NSString* _Nonnull)getPositionXi;
+- (NSString* _Nonnull)getPositionXiDesc;
+- (NSString* _Nonnull)getPositionYangGui;
+- (NSString* _Nonnull)getPositionYangGuiDesc;
+- (NSString* _Nonnull)getPositionYinGui;
+- (NSString* _Nonnull)getPositionYinGuiDesc;
+- (NSString* _Nonnull)getSha;
+- (NSString* _Nonnull)getShengXiao;
+- (NSString* _Nonnull)getTianShen;
+- (NSString* _Nonnull)getTianShenLuck;
+- (NSString* _Nonnull)getTianShenType;
+/**
+ * 获取时辰所在旬
+ */
+- (NSString* _Nonnull)getXun;
+/**
+ * 获取值时空亡
+ */
+- (NSString* _Nonnull)getXunKong;
+// skipped method LunarTime.GetYi with unsupported parameter or return types
+
+- (NSString* _Nonnull)getZhi;
+- (long)getZhiIndex;
+- (NSString* _Nonnull)string;
+- (NSString* _Nonnull)toString;
+@end
+
+/**
+ * 阴历年
+ */
 @interface CalendarLunarYear : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nullable instancetype)init:(long)lunarYear;
+- (NSString* _Nonnull)getDeJin;
+- (NSString* _Nonnull)getFenBing;
+- (NSString* _Nonnull)getGengTian;
 // skipped method LunarYear.GetJieQiJulianDays with unsupported parameter or return types
 
 - (CalendarLunarMonth* _Nullable)getMonth:(long)lunarMonth;
@@ -711,6 +810,7 @@
 
 - (NSString* _Nonnull)getMonthsInString;
 - (long)getYear;
+- (NSString* _Nonnull)getZhiShui;
 - (NSString* _Nonnull)string;
 - (NSString* _Nonnull)toFullString;
 @end
@@ -744,6 +844,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 数九
+ */
 @interface CalendarShuJiu : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -759,6 +862,9 @@
 - (NSString* _Nonnull)toString;
 @end
 
+/**
+ * 阳历
+ */
 @interface CalendarSolar : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -798,6 +904,9 @@
 - (NSString* _Nonnull)toYmdHms;
 @end
 
+/**
+ * 阳历半年
+ */
 @interface CalendarSolarHalfYear : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -817,6 +926,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 阳历月
+ */
 @interface CalendarSolarMonth : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -835,6 +947,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 阳历季度
+ */
 @interface CalendarSolarSeason : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -849,11 +964,14 @@
 // skipped method SolarSeason.GetMonths with unsupported parameter or return types
 
 - (long)getYear;
-- (CalendarSolarSeason* _Nullable)next:(long)seassons;
+- (CalendarSolarSeason* _Nullable)next:(long)seasons;
 - (NSString* _Nonnull)string;
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 阳历周
+ */
 @interface CalendarSolarWeek : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -878,6 +996,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 阳历年
+ */
 @interface CalendarSolarYear : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -895,6 +1016,9 @@
 - (NSString* _Nonnull)toFullString;
 @end
 
+/**
+ * 小运
+ */
 @interface CalendarXiaoYun : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -925,6 +1049,8 @@
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nullable instancetype)init:(CalendarEightChar* _Nullable)eightChar gender:(long)gender;
 // skipped method Yun.GetDaYun with unsupported parameter or return types
+
+// skipped method Yun.GetDaYunBy with unsupported parameter or return types
 
 /**
  * 获取性别
@@ -961,6 +1087,8 @@ FOUNDATION_EXPORT const int64_t CalendarMONTH_IN_YEAR;
 @interface Calendar : NSObject
 // skipped variable BA_MEN_QI_MEN with unsupported type: []string
 
+// skipped variable CACHE with unsupported type: map[int]*github.com/6tail/lunar-go/calendar.LunarYear
+
 // skipped variable CHANG_SHENG with unsupported type: []string
 
 // skipped variable COLOR with unsupported type: []string
@@ -968,6 +1096,12 @@ FOUNDATION_EXPORT const int64_t CalendarMONTH_IN_YEAR;
 // skipped variable JIE_QI with unsupported type: []string
 
 // skipped variable JIE_QI_IN_USE with unsupported type: []string
+
+// skipped variable LEAP with unsupported type: map[int]int
+
+// skipped variable LEAP_11 with unsupported type: []int
+
+// skipped variable LEAP_12 with unsupported type: []int
 
 // skipped variable LUCK_QI_MEN with unsupported type: []string
 
@@ -1010,6 +1144,15 @@ FOUNDATION_EXPORT CalendarDaYun* _Nullable CalendarNewDaYun(CalendarYun* _Nullab
 
 FOUNDATION_EXPORT CalendarEightChar* _Nullable CalendarNewEightChar(CalendarLunar* _Nullable lunar);
 
+// skipped function NewExactDateFromDate with unsupported parameter or return types
+
+
+// skipped function NewExactDateFromYmd with unsupported parameter or return types
+
+
+// skipped function NewExactDateFromYmdHms with unsupported parameter or return types
+
+
 FOUNDATION_EXPORT CalendarFu* _Nullable CalendarNewFu(NSString* _Nullable name, long index);
 
 FOUNDATION_EXPORT CalendarHoliday* _Nullable CalendarNewHoliday(NSString* _Nullable day, NSString* _Nullable name, BOOL work, NSString* _Nullable target);
@@ -1032,6 +1175,8 @@ FOUNDATION_EXPORT CalendarLunar* _Nullable CalendarNewLunarFromYmd(long lunarYea
 FOUNDATION_EXPORT CalendarLunarMonth* _Nullable CalendarNewLunarMonth(long lunarYear, long lunarMonth, long dayCount, double firstJulianDay);
 
 FOUNDATION_EXPORT CalendarLunarMonth* _Nullable CalendarNewLunarMonthFromYm(long lunarYear, long lunarMonth);
+
+FOUNDATION_EXPORT CalendarLunarTime* _Nullable CalendarNewLunarTime(long lunarYear, long lunarMonth, long lunarDay, long hour, long minute, long second);
 
 FOUNDATION_EXPORT CalendarLunarYear* _Nullable CalendarNewLunarYear(long lunarYear);
 
