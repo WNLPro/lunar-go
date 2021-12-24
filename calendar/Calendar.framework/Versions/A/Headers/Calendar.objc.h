@@ -1109,6 +1109,8 @@ FOUNDATION_EXPORT const int64_t CalendarMONTH_IN_YEAR;
 
 // skipped variable MONTH_ZHI with unsupported type: []string
 
+// skipped variable NAMES with unsupported type: []string
+
 // skipped variable NAME_BEI_DOU with unsupported type: []string
 
 // skipped variable NAME_QI_MEN with unsupported type: []string
@@ -1130,6 +1132,28 @@ FOUNDATION_EXPORT const int64_t CalendarMONTH_IN_YEAR;
 // skipped variable YIN_YANG_QI_MEN with unsupported type: []string
 
 @end
+
+// skipped function Fix with unsupported parameter or return types
+
+
+FOUNDATION_EXPORT CalendarHoliday* _Nullable CalendarGetHoliday(NSString* _Nullable ymd);
+
+FOUNDATION_EXPORT CalendarHoliday* _Nullable CalendarGetHolidayByYmd(long year, long month, long day);
+
+// skipped function GetHolidays with unsupported parameter or return types
+
+
+// skipped function GetHolidaysByTarget with unsupported parameter or return types
+
+
+// skipped function GetHolidaysByTargetYmd with unsupported parameter or return types
+
+
+// skipped function GetHolidaysByYear with unsupported parameter or return types
+
+
+// skipped function GetHolidaysByYm with unsupported parameter or return types
+
 
 // skipped function ListSolarFromBaZi with unsupported parameter or return types
 
