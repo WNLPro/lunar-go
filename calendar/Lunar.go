@@ -532,9 +532,9 @@ func convertJieQi(name string) string {
 
 func (lunar *Lunar) GetJie() string {
 	jie := ""
-	j := len(JIE_QI)
-	for i := 1; i < j; i++ {
-		key := JIE_QI[i]
+	j := len(JIE_QI_IN_USE)
+	for i := 0; i < j; i += 2 {
+		key := JIE_QI_IN_USE[i]
 		d := lunar.jieQi[key]
 		if d.year == lunar.solar.year && d.month == lunar.solar.month && d.day == lunar.solar.day {
 			jie = key
@@ -546,10 +546,10 @@ func (lunar *Lunar) GetJie() string {
 
 func (lunar *Lunar) GetQi() string {
 	qi := ""
-	j := len(JIE_QI)
-	for i := 0; i < j; i += 2 {
-		key := JIE_QI[i]
-		d := lunar.jieQi[qi]
+	j := len(JIE_QI_IN_USE)
+	for i := 1; i < j; i += 2 {
+		key := JIE_QI_IN_USE[i]
+		d := lunar.jieQi[key]
 		if d.year == lunar.solar.year && d.month == lunar.solar.month && d.day == lunar.solar.day {
 			qi = key
 			break
@@ -612,9 +612,12 @@ func (lunar *Lunar) GetFestivals() *list.List {
 func (lunar *Lunar) GetOtherFestivals() *list.List {
 	l := list.New()
 	if f, ok := LunarUtil.OTHER_FESTIVAL[fmt.Sprintf("%d-%d", lunar.month, lunar.day)]; ok {
-		for i := 0; i < len(f); i++ {
-			l.PushBack(f[i])
+		for _, v := range f {
+			l.PushBack(v)
 		}
+	}
+	if strings.Compare(lunar.solar.ToYmd(), lunar.jieQi["清明"].Next(-1).ToYmd()) == 0 {
+		l.PushBack("寒食节")
 	}
 	return l
 }
@@ -702,11 +705,23 @@ func (lunar *Lunar) GetDayPositionYinGuiDesc() string {
 }
 
 func (lunar *Lunar) GetDayPositionFu() string {
-	return LunarUtil.POSITION_FU[lunar.dayGanIndex+1]
+	return lunar.GetDayPositionFuBySect(2)
+}
+
+func (lunar *Lunar) GetDayPositionFuBySect(sect int) string {
+	offset := lunar.dayGanIndex + 1
+	if 1 == sect {
+		return LunarUtil.POSITION_FU[offset]
+	}
+	return LunarUtil.POSITION_FU_2[offset]
 }
 
 func (lunar *Lunar) GetDayPositionFuDesc() string {
-	return LunarUtil.POSITION_DESC[lunar.GetDayPositionFu()]
+	return lunar.GetDayPositionFuDescBySect(2)
+}
+
+func (lunar *Lunar) GetDayPositionFuDescBySect(sect int) string {
+	return LunarUtil.POSITION_DESC[lunar.GetDayPositionFuBySect(sect)]
 }
 
 func (lunar *Lunar) GetDayPositionCai() string {
@@ -791,9 +806,8 @@ func (lunar *Lunar) GetChongShengXiao() string {
 
 func (lunar *Lunar) GetDayChongShengXiao() string {
 	chong := lunar.GetDayChong()
-	j := len(LunarUtil.ZHI)
-	for i := 0; i < j; i++ {
-		if LunarUtil.ZHI[i] == chong {
+	for i, v := range LunarUtil.ZHI {
+		if v == chong {
 			return LunarUtil.SHENG_XIAO[i]
 		}
 	}
@@ -953,11 +967,7 @@ func (lunar *Lunar) GetTimeTianShenLuck() string {
 }
 
 func (lunar *Lunar) GetDayPositionTai() string {
-	offset := lunar.dayGanIndex - lunar.dayZhiIndex
-	if offset < 0 {
-		offset += 12
-	}
-	return LunarUtil.POSITION_TAI_DAY[offset*5+lunar.dayGanIndex]
+	return LunarUtil.POSITION_TAI_DAY[LunarUtil.GetJiaZiIndex(lunar.GetDayInGanZhi())]
 }
 
 func (lunar *Lunar) GetMonthPositionTai() string {
@@ -985,9 +995,8 @@ func (lunar *Lunar) GetTimeChongGanTie() string {
 
 func (lunar *Lunar) GetTimeChongShengXiao() string {
 	chong := lunar.GetTimeChong()
-	j := len(LunarUtil.ZHI)
-	for i := 0; i < j; i++ {
-		if LunarUtil.ZHI[i] == chong {
+	for i, v := range LunarUtil.ZHI {
+		if v == chong {
 			return LunarUtil.SHENG_XIAO[i]
 		}
 	}
@@ -1246,8 +1255,8 @@ func (lunar *Lunar) getNearJieQi(forward bool, conditions []string) *JieQi {
 	var near *Solar
 	filters := map[string]bool{}
 	if nil != conditions {
-		for i := 0; i < len(conditions); i++ {
-			filters[conditions[i]] = true
+		for _, v := range conditions {
+			filters[v] = true
 		}
 	}
 	filter := len(filters) > 0
@@ -1705,9 +1714,8 @@ func (lunar *Lunar) GetWuHou() string {
 	jq := lunar.GetPrevJieQi()
 	name := jq.GetName()
 	offset := 0
-	j := len(JIE_QI)
-	for i := 0; i < j; i++ {
-		if strings.Compare(name, JIE_QI[i]) == 0 {
+	for i, v := range JIE_QI {
+		if strings.Compare(name, v) == 0 {
 			offset = i
 			break
 		}
@@ -1742,4 +1750,14 @@ func (lunar *Lunar) GetTimes() []*LunarTime {
 		l[i+1] = NewLunarTime(lunar.year, lunar.month, lunar.day, (i+1)*2-1, 0, 0)
 	}
 	return l
+}
+
+// 获取佛历
+func (lunar *Lunar) GetFoto() *Foto {
+	return NewFotoFromLunar(lunar)
+}
+
+// 获取道历
+func (lunar *Lunar) GetTao() *Tao {
+	return NewTaoFromLunar(lunar)
 }
