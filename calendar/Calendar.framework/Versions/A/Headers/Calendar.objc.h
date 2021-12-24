@@ -13,6 +13,8 @@
 
 @class CalendarDaYun;
 @class CalendarEightChar;
+@class CalendarFoto;
+@class CalendarFotoFestival;
 @class CalendarFu;
 @class CalendarHoliday;
 @class CalendarJieQi;
@@ -30,6 +32,8 @@
 @class CalendarSolarSeason;
 @class CalendarSolarWeek;
 @class CalendarSolarYear;
+@class CalendarTao;
+@class CalendarTaoFestival;
 @class CalendarXiaoYun;
 @class CalendarYun;
 
@@ -168,6 +172,62 @@
 - (CalendarYun* _Nullable)getYun:(long)gender;
 - (void)setSect:(long)sect;
 - (NSString* _Nonnull)string;
+@end
+
+/**
+ * 佛历
+ */
+@interface CalendarFoto : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nullable instancetype)init:(long)year month:(long)month day:(long)day hour:(long)hour minute:(long)minute second:(long)second;
+- (nullable instancetype)initFromLunar:(CalendarLunar* _Nullable)lunar;
+- (nullable instancetype)initFromYmd:(long)year month:(long)month day:(long)day;
+- (NSString* _Nonnull)getAnimal;
+- (long)getDay;
+- (NSString* _Nonnull)getDayInChinese;
+// skipped method Foto.GetFestivals with unsupported parameter or return types
+
+- (NSString* _Nonnull)getGong;
+- (CalendarLunar* _Nullable)getLunar;
+- (long)getMonth;
+- (NSString* _Nonnull)getMonthInChinese;
+- (NSString* _Nonnull)getShou;
+- (NSString* _Nonnull)getXiu;
+- (NSString* _Nonnull)getXiuLuck;
+- (NSString* _Nonnull)getXiuSong;
+- (long)getYear;
+- (NSString* _Nonnull)getYearInChinese;
+- (NSString* _Nonnull)getZheng;
+- (BOOL)isDayYangGong;
+- (BOOL)isDayZhaiGuanYin;
+- (BOOL)isDayZhaiShuoWang;
+- (BOOL)isDayZhaiSix;
+- (BOOL)isDayZhaiTen;
+- (BOOL)isMonthZhai;
+- (NSString* _Nonnull)string;
+- (NSString* _Nonnull)toFullString;
+- (NSString* _Nonnull)toString;
+@end
+
+/**
+ * 佛历因果犯忌
+ */
+@interface CalendarFotoFestival : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nullable instancetype)init:(NSString* _Nullable)name result:(NSString* _Nullable)result everyMonth:(BOOL)everyMonth remark:(NSString* _Nullable)remark;
+- (NSString* _Nonnull)getName;
+- (NSString* _Nonnull)getRemark;
+- (NSString* _Nonnull)getResult;
+- (BOOL)isEveryMonth;
+- (NSString* _Nonnull)string;
+- (NSString* _Nonnull)toFullString;
+- (NSString* _Nonnull)toString;
 @end
 
 /**
@@ -403,7 +463,9 @@
 - (NSString* _Nonnull)getDayPositionCai;
 - (NSString* _Nonnull)getDayPositionCaiDesc;
 - (NSString* _Nonnull)getDayPositionFu;
+- (NSString* _Nonnull)getDayPositionFuBySect:(long)sect;
 - (NSString* _Nonnull)getDayPositionFuDesc;
+- (NSString* _Nonnull)getDayPositionFuDescBySect:(long)sect;
 - (NSString* _Nonnull)getDayPositionTai;
 - (NSString* _Nonnull)getDayPositionXi;
 - (NSString* _Nonnull)getDayPositionXiDesc;
@@ -455,6 +517,10 @@
 - (CalendarEightChar* _Nullable)getEightChar;
 // skipped method Lunar.GetFestivals with unsupported parameter or return types
 
+/**
+ * 获取佛历
+ */
+- (CalendarFoto* _Nullable)getFoto;
 /**
  * 获取三伏，如果不是三伏天，返回nil
  */
@@ -596,6 +662,10 @@
  */
 - (CalendarShuJiu* _Nullable)getShuJiu;
 - (CalendarSolar* _Nullable)getSolar;
+/**
+ * 获取道历
+ */
+- (CalendarTao* _Nullable)getTao;
 /**
  * 获取时辰
  */
@@ -763,7 +833,9 @@
 - (NSString* _Nonnull)getPositionCai;
 - (NSString* _Nonnull)getPositionCaiDesc;
 - (NSString* _Nonnull)getPositionFu;
+- (NSString* _Nonnull)getPositionFuBySect:(long)sect;
 - (NSString* _Nonnull)getPositionFuDesc;
+- (NSString* _Nonnull)getPositionFuDescBySect:(long)sect;
 - (NSString* _Nonnull)getPositionXi;
 - (NSString* _Nonnull)getPositionXiDesc;
 - (NSString* _Nonnull)getPositionYangGui;
@@ -1017,6 +1089,52 @@
 @end
 
 /**
+ * 道历
+ */
+@interface CalendarTao : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nullable instancetype)init:(long)year month:(long)month day:(long)day hour:(long)hour minute:(long)minute second:(long)second;
+- (nullable instancetype)initFromLunar:(CalendarLunar* _Nullable)lunar;
+- (nullable instancetype)initFromYmd:(long)year month:(long)month day:(long)day;
+- (long)getDay;
+- (NSString* _Nonnull)getDayInChinese;
+// skipped method Tao.GetFestivals with unsupported parameter or return types
+
+- (CalendarLunar* _Nullable)getLunar;
+- (long)getMonth;
+- (NSString* _Nonnull)getMonthInChinese;
+- (long)getYear;
+- (NSString* _Nonnull)getYearInChinese;
+- (BOOL)isDayBaHui;
+- (BOOL)isDayBaJie;
+- (BOOL)isDaySanHui;
+- (BOOL)isDaySanYuan;
+- (BOOL)isDayWuLa;
+- (NSString* _Nonnull)string;
+- (NSString* _Nonnull)toFullString;
+- (NSString* _Nonnull)toString;
+@end
+
+/**
+ * 道历节日
+ */
+@interface CalendarTaoFestival : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nullable instancetype)init:(NSString* _Nullable)name remark:(NSString* _Nullable)remark;
+- (NSString* _Nonnull)getName;
+- (NSString* _Nonnull)getRemark;
+- (NSString* _Nonnull)string;
+- (NSString* _Nonnull)toFullString;
+- (NSString* _Nonnull)toString;
+@end
+
+/**
  * 小运
  */
 @interface CalendarXiaoYun : NSObject <goSeqRefInterface> {
@@ -1087,11 +1205,17 @@ FOUNDATION_EXPORT const int64_t CalendarMONTH_IN_YEAR;
 @interface Calendar : NSObject
 // skipped variable BA_MEN_QI_MEN with unsupported type: []string
 
++ (long) birtH_YEAR;
++ (void) setBIRTH_YEAR:(long)v;
+
 // skipped variable CACHE with unsupported type: map[int]*github.com/6tail/lunar-go/calendar.LunarYear
 
 // skipped variable CHANG_SHENG with unsupported type: []string
 
 // skipped variable COLOR with unsupported type: []string
+
++ (long) deaD_YEAR;
++ (void) setDEAD_YEAR:(long)v;
 
 // skipped variable JIE_QI with unsupported type: []string
 
@@ -1177,6 +1301,14 @@ FOUNDATION_EXPORT CalendarEightChar* _Nullable CalendarNewEightChar(CalendarLuna
 // skipped function NewExactDateFromYmdHms with unsupported parameter or return types
 
 
+FOUNDATION_EXPORT CalendarFoto* _Nullable CalendarNewFoto(long year, long month, long day, long hour, long minute, long second);
+
+FOUNDATION_EXPORT CalendarFotoFestival* _Nullable CalendarNewFotoFestival(NSString* _Nullable name, NSString* _Nullable result, BOOL everyMonth, NSString* _Nullable remark);
+
+FOUNDATION_EXPORT CalendarFoto* _Nullable CalendarNewFotoFromLunar(CalendarLunar* _Nullable lunar);
+
+FOUNDATION_EXPORT CalendarFoto* _Nullable CalendarNewFotoFromYmd(long year, long month, long day);
+
 FOUNDATION_EXPORT CalendarFu* _Nullable CalendarNewFu(NSString* _Nullable name, long index);
 
 FOUNDATION_EXPORT CalendarHoliday* _Nullable CalendarNewHoliday(NSString* _Nullable day, NSString* _Nullable name, BOOL work, NSString* _Nullable target);
@@ -1251,6 +1383,14 @@ FOUNDATION_EXPORT CalendarSolarYear* _Nullable CalendarNewSolarYear(void);
 
 
 FOUNDATION_EXPORT CalendarSolarYear* _Nullable CalendarNewSolarYearFromYear(long year);
+
+FOUNDATION_EXPORT CalendarTao* _Nullable CalendarNewTao(long year, long month, long day, long hour, long minute, long second);
+
+FOUNDATION_EXPORT CalendarTaoFestival* _Nullable CalendarNewTaoFestival(NSString* _Nullable name, NSString* _Nullable remark);
+
+FOUNDATION_EXPORT CalendarTao* _Nullable CalendarNewTaoFromLunar(CalendarLunar* _Nullable lunar);
+
+FOUNDATION_EXPORT CalendarTao* _Nullable CalendarNewTaoFromYmd(long year, long month, long day);
 
 FOUNDATION_EXPORT CalendarXiaoYun* _Nullable CalendarNewXiaoYun(CalendarDaYun* _Nullable daYun, long index, BOOL forward);
 
