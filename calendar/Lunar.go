@@ -594,6 +594,22 @@ func (lunar *Lunar) GetShou() string {
 	return LunarUtil.SHOU[lunar.GetGong()]
 }
 
+func (lunar *Lunar) GetFestivalsStrings() string {
+	name := ""
+	for i := lunar.GetFestivals().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
+func (lunar *Lunar) GetOtherFestivalsStrings() string {
+	name := ""
+	for i := lunar.GetOtherFestivals().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (lunar *Lunar) GetFestivals() *list.List {
 	l := list.New()
 	if f, ok := LunarUtil.FESTIVAL[fmt.Sprintf("%d-%d", lunar.month, lunar.day)]; ok {

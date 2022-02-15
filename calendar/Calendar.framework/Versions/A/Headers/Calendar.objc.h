@@ -517,6 +517,7 @@
 - (CalendarEightChar* _Nullable)getEightChar;
 // skipped method Lunar.GetFestivals with unsupported parameter or return types
 
+- (NSString* _Nonnull)getFestivalsStrings;
 /**
  * 获取佛历
  */
@@ -591,6 +592,7 @@
 - (CalendarJieQi* _Nullable)getNextQi;
 // skipped method Lunar.GetOtherFestivals with unsupported parameter or return types
 
+- (NSString* _Nonnull)getOtherFestivalsStrings;
 - (NSString* _Nonnull)getPengZuGan;
 - (NSString* _Nonnull)getPengZuZhi;
 /**
@@ -952,6 +954,7 @@
 - (long)getDay;
 // skipped method Solar.GetFestivals with unsupported parameter or return types
 
+- (NSString* _Nonnull)getFestivalsStrings;
 - (long)getHour;
 - (double)getJulianDay;
 - (CalendarLunar* _Nullable)getLunar;
@@ -959,6 +962,7 @@
 - (long)getMonth;
 // skipped method Solar.GetOtherFestivals with unsupported parameter or return types
 
+- (NSString* _Nonnull)getOtherFestivalsStrings;
 - (long)getSecond;
 - (long)getWeek;
 - (NSString* _Nonnull)getWeekInChinese;

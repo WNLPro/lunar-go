@@ -227,6 +227,22 @@ func (solar *Solar) GetXingZuo() string {
 	return SolarUtil.XINGZUO[index]
 }
 
+func (solar *Solar) GetFestivalsStrings() string {
+	name := ""
+	for i := solar.GetFestivals().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
+func (solar *Solar) GetOtherFestivalsStrings() string {
+	name := ""
+	for i := solar.GetOtherFestivals().Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (solar *Solar) GetFestivals() *list.List {
 	l := list.New()
 	//获取几月几日对应的节日
