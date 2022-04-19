@@ -537,8 +537,10 @@
  * 获取节气名称，如果无节气，返回空字符串
  */
 - (NSString* _Nonnull)getJieQi;
+- (NSString* _Nonnull)getJieQiDateByString:(NSString* _Nullable)jieqi;
 // skipped method Lunar.GetJieQiList with unsupported parameter or return types
 
+- (NSString* _Nonnull)getJieQiListString;
 // skipped method Lunar.GetJieQiTable with unsupported parameter or return types
 
 /**

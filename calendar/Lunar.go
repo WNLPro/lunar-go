@@ -1027,6 +1027,18 @@ func (lunar *Lunar) GetJieQiTable() map[string]*Solar {
 	return lunar.jieQi
 }
 
+func  (lunar *Lunar) GetJieQiDateByString(jieqi string) string {
+	return lunar.jieQi[jieqi].ToYmd()
+}
+
+func (lunar *Lunar) GetJieQiListString() string {
+	name := ""
+	for i := lunar.jieQiList.Front(); i != nil; i = i.Next() {
+		name += i.Value.(string) + ";"
+	}
+	return name
+}
+
 func (lunar *Lunar) GetJieQiList() *list.List {
 	return lunar.jieQiList
 }
